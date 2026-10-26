@@ -1,5 +1,7 @@
 # Olist Order Reporting Pipeline
 
+![Dashboard Screenshot](docs/images/Dashboard.png)
+
 An automated data pipeline and warehouse that turns raw e-commerce order data
 into a dashboard an operations manager can trust — with every row checked
 before it reaches them.
