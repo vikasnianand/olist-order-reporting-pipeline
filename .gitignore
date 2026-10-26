@@ -1,0 +1,15 @@
+# Raw and generated data stays out of GitHub (Olist is large and has its own licence)
+data/raw/*
+data/clean/*
+data/rejected/*
+logs/*
+!data/raw/.gitkeep
+!data/clean/.gitkeep
+!data/rejected/.gitkeep
+!logs/.gitkeep
+
+# Local settings and secrets
+.env
+*.db
+__pycache__/
+.ipynb_checkpoints/
