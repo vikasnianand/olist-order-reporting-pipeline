@@ -61,7 +61,7 @@ See `docs/pipeline_diagram.md` for the full flow. In short:
    handover days) so every report uses the same definition.
 4. **Load** (`pipeline/load.py`) — applies `sql/schema.sql` and loads every
    table plus the quality logs into the warehouse.
-5. **Dashboard** — Power BI connects to the warehouse's views
+5. **Dashboard** — Tableau connects to the warehouse's views
    (`vw_kpi_monthly`, `vw_seller_performance`, `vw_category_performance`,
    `vw_state_performance`, `vw_data_quality`) and needs no further
    transformation.
@@ -105,7 +105,7 @@ python -c "import sqlite3,pandas as pd; c=sqlite3.connect('olist_warehouse.db');
 print(pd.read_sql('SELECT * FROM vw_kpi_monthly LIMIT 5', c))"
 ```
 
-Then point Power BI's "Get Data" at the same database and build visuals
+Then connect Tableau to the same database and build visuals
 straight from the `vw_*` views.
 
 ## Design decisions (so I can defend them)
