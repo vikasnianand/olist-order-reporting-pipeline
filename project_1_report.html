@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>project 1: olist pipeline</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 60px 50px;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #0f3460;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        h2 {
+            font-size: 1.8em;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            color: #0f3460;
+            font-weight: 700;
+            border-bottom: 3px solid #e94560;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.3em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            color: #16213e;
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 15px;
+            font-size: 1.05em;
+            color: #2a2a2a;
+        }
+
+        strong {
+            color: #e94560;
+            font-weight: 600;
+        }
+
+        ul {
+            margin-left: 25px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            font-size: 1.05em;
+            color: #2a2a2a;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+            font-size: 0.95em;
+        }
+
+        pre {
+            background: #1a1a1a;
+            color: #00ff00;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+            font-family: 'Courier New', monospace;
+        }
+
+        .vibe-box {
+            background: #ffe5e9;
+            padding: 20px;
+            border-left: 5px solid #e94560;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .highlight-box {
+            background: #e8f4f8;
+            padding: 20px;
+            border-left: 5px solid #0f3460;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .divider {
+            border: none;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #ddd, transparent);
+            margin: 40px 0;
+        }
+
+        .interview-angle {
+            background: #f0f5ff;
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 5px solid #0f3460;
+        }
+
+        .interview-angle ul {
+            margin-top: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            h2 {
+                font-size: 1.4em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>project 1: olist pipeline</h1>
+        <p style="font-size: 1.2em; color: #666; margin-bottom: 30px;">what i actually built</p>
+
+        <hr class="divider">
+
+        <h2>the vibe</h2>
+        <div class="vibe-box">
+            <p>an e-commerce manager gets orders every week and manually combines CSVs to make reports. they're hoping the data is clean. it usually isn't.</p>
+            <p><strong>i built a system that automatically catches the garbage data BEFORE it reaches the report.</strong></p>
+        </div>
+
+        <hr class="divider">
+
+        <h2>what it does (in 30 seconds)</h2>
+        <pre>python pipeline/load.py</pre>
+        <p>that's it. one command does:</p>
+        <ul>
+            <li><strong>check</strong> if data makes sense (reject the broken stuff)</li>
+            <li><strong>organize</strong> into tables (so you can find things easily)</li>
+            <li><strong>load</strong> into a database (ready for dashboards)</li>
+        </ul>
+        <p>takes 30 seconds instead of 2 hours of manual work.</p>
+
+        <hr class="divider">
+
+        <h2>the magic: three stages</h2>
+
+        <h3>stage 1: validate — "is this row actually valid or is it garbage?"</h3>
+        <ul>
+            <li>order delivered before it was purchased? → garbage, reject it</li>
+            <li>customer doesn't exist? → garbage, reject it</li>
+            <li>product has no price? → garbage, reject it</li>
+        </ul>
+        <div class="highlight-box">
+            <p>from my test run: <strong>2,012 orders came in, 35 were trash, 1,977 made it through clean.</strong></p>
+        </div>
+
+        <h3>stage 2: transform — "organize this mess"</h3>
+        <ul>
+            <li>split into <strong>dimensions</strong> (who/what/when): customer, seller, product, date</li>
+            <li>split into <strong>facts</strong> (what happened): orders, items</li>
+            <li>calculate metrics: how many days to deliver? was it late?</li>
+        </ul>
+        <p>why split? because if you keep customer info in every order row, you repeat it 100+ times. change it once in the dimension table, and all 100 orders automatically show the update.</p>
+
+        <h3>stage 3: load — "put it in a database"</h3>
+        <ul>
+            <li>create tables with clean data</li>
+            <li>create pre-made views for dashboards</li>
+        </ul>
+        <p>done. dashboard gets trustworthy data.</p>
+
+        <hr class="divider">
+
+        <h2>why this matters (my take)</h2>
+        <p>most people think "validation" is boring. but it's actually the thing that makes reports trustworthy.</p>
+        <p>when the manager sees "1,977 orders," they don't wonder "are these real?" they just trust it. because they know 173 bad rows were caught and logged.</p>
+        <p><strong>that's the whole point.</strong></p>
+
+        <hr class="divider">
+
+        <h2>cool things i learned</h2>
+
+        <h3>1. business rules are choices</h3>
+        <p>i decided "price can't be negative" should reject rows. but what if the company intentionally gives refunds as negative prices? suddenly my rule is wrong. so validation isn't obvious — you have to ask the business user.</p>
+
+        <h3>2. one table vs two tables matters</h3>
+        <p>if i put customer info in every order row, and i need to fix a customer's city, i fix 100 rows. with dimensions, i fix 1 row and all 100 orders automatically get it.</p>
+
+        <h3>3. definitions have to be consistent</h3>
+        <p>i define "late" as "delivered after promised date." every report uses this definition. nobody invents their own "late." this sounds obvious but it's not — lots of companies have different definitions of the same metric.</p>
+
+        <hr class="divider">
+
+        <h2>the test run (what actually happened)</h2>
+        <pre>started: 2,012 orders + 2,495 items + other stuff
+validation checked everything:
+  - 12 duplicate orders → rejected
+  - 10 orders delivered before purchase → rejected (impossible!)
+  - 6 orders from customers who don't exist → rejected
+  - etc.
+result: 173 bad rows caught and logged
+
+ended: 1,977 clean orders + 2,448 clean items in database ✅</pre>
+        <p>if those 35 bad orders had made it to the report, the manager would see wrong numbers. instead, they see clean data. that's the value.</p>
+
+        <hr class="divider">
+
+        <h2>why i built it this way</h2>
+        <ul>
+            <li><strong>validate first:</strong> bad data never reaches the database</li>
+            <li><strong>transform smart:</strong> dimensions prevent repetition, facts answer real questions</li>
+            <li><strong>load once:</strong> run it weekly, get clean data automatically</li>
+        </ul>
+        <p>no manual work. no surprises. just trustworthy data.</p>
+
+        <hr class="divider">
+
+        <h2>if you want to see it work</h2>
+        <pre>python pipeline/load.py</pre>
+        <p>look at the output. you'll see exactly:</p>
+        <ul>
+            <li>how many rows passed</li>
+            <li>which ones failed</li>
+            <li>why they failed</li>
+        </ul>
+        <p>that output is the proof that the system works.</p>
+
+        <hr class="divider">
+
+        <h2>interview angle</h2>
+        <div class="interview-angle">
+            <p>this shows i can:</p>
+            <ul>
+                <li>see a real problem (bad data breaks reports)</li>
+                <li>design a solution (catch it early, organize it well)</li>
+                <li>think like a business person (what makes data trustworthy?)</li>
+                <li>write code that solves it</li>
+            </ul>
+            <p style="margin-top: 15px;"><strong>not just "i wrote SQL." more like "i built something that makes data trustworthy."</strong></p>
+        </div>
+    </div>
+</body>
+</html>
