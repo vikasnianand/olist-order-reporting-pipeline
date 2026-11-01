@@ -10,7 +10,7 @@
 
 # Olist Order Reporting Pipeline
 
-## 📄 [view my report!](./project_1_report.html)
+## 📄 [view my report!](https://vikasnianand.github.io/olist-order-reporting-pipeline/project_1_report.html)
 
 ![Dashboard Screenshot](docs/images/Dashboard.png)
 
