@@ -10,7 +10,7 @@
 
 # Olist Order Reporting Pipeline
 
-## 📄 [View the Full Report](./Project1_styled.html)
+## 📄 [view my report!](./Project1_styled.html)
 
 ![Dashboard Screenshot](docs/images/Dashboard.png)
 
