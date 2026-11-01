@@ -7,7 +7,10 @@
 ![GitHub](https://img.shields.io/badge/GitHub-A17E7E?style=for-the-badge&logo=github&logoColor=white)
 
 
+
 # Olist Order Reporting Pipeline
+
+## 📄 [View the Full Report](./Project1_styled.html)
 
 ![Dashboard Screenshot](docs/images/Dashboard.png)
 
